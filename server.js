@@ -3,10 +3,10 @@ require('dotenv').load({silent: true}); //loads environment variables defined in
 var express = require('express');
 var app = express();
 
-var nutritionix = require('nutritionix')({
-    appId: process.env.NUTRITIONIX_APP_ID,
-    appKey: process.env.NUTRITIONIX_API_KEY
-}, false);
+// var nutritionix = require('nutritionix')({
+//     appId: process.env.NUTRITIONIX_APP_ID,
+//     appKey: process.env.NUTRITIONIX_API_KEY
+// }, false);
 
 
 //process.env.APP_SECRET = process.env.APP_SECRET || 'for the love of zeus! Change Me!';
