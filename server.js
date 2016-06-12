@@ -1,49 +1,34 @@
+'use strict';
+
 require('dotenv').load({silent: true}); //loads environment variables defined in .env; for use in development; detects that .env exists
+const http = require('http');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
+const foodRouter = express.Router();
 
-var express = require('express');
-var app = express();
+const apiKey = process.env.FOODESSENTIALS_API_KEY;
 
-var nutritionix = require('nutritionix')({
-    appId: process.env.NUTRITIONIX_APP_ID,
-    appKey: process.env.NUTRITIONIX_API_KEY
-}, false);
+let sessionId; 
 
+app.use('/food', foodRouter);
 
-//process.env.APP_SECRET = process.env.APP_SECRET || 'for the love of zeus! Change Me!';
-
-//app.use(express.static(__dirname + '/build'));
-
-//var upcRouter = require(__dirname + '/routes/upc_routes');
-// var nutritionixRouter = require(__dirname + '/routes/nutritionix_routes');
-
-// app.use('/', upcRouter);
-// app.use('/', nutritionixRouter);
-
-// app.get('/', function (req, res) {
-//   res.send('hello world');
-// });
-
-app.get('*', function(request, response) {
-  console.log('New request:', request.url);
-  response.sendFile('index.html', { root: '.' });
+foodRouter.get('/session', (req, res) => {
+  http.get(`http://api.foodessentials.com/createsession?uid=someuid&devid=somedevid&appid=someappid&f=json&api_key=${apiKey}`, (res) => {
+    console.log(`Got response: ${res.statusCode}`);
+    sessionId = (res.headers['set-cookie'][0]).split(';')[0].split('=')[1];
+    console.log('sessionId', sessionId);
+  }).on('error', (e) => {
+    console.log(`Got error: ${e.message}`);
+  });
+  res.end();
 });
 
-// app.post('/search', function (req, res) {
-//   console.log(nutritionix);
-//       nutritionix.item({
-//           upc: 52200004265
-//       }, function(err, item) {
-//           if (err) {
-//               return handleError(err, res);
-//           }
-//           res.json(item);
-//       });
-// });
-// app.use(function(req, res) {
-//   res.status(404).send('Page not found');
-// });
-
-var port = process.env.PORT || 3000;
+let port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('server up on port: ' + port);
 });
+
+
+
