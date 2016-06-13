@@ -1,21 +1,19 @@
+'use strict';
+
 require('dotenv').load({silent: true}); //loads environment variables defined in .env; for use in development; detects that .env exists
+//const http = require('http');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+//const jsonParser = bodyParser.json();
+const foodRouter = require('./routes/foodRoutes');
 
-var express = require('express');
-var app = express();
+app.use('/food', foodRouter);
 
-process.env.APP_SECRET = process.env.APP_SECRET || 'for the love of zeus! Change Me!';
-
-app.use(express.static(__dirname + '/build'));
-
-var upcRouter = require(__dirname + '/routes/upc_routes');
-
-app.use('/', upcRouter);
-
-app.use(function(req, res) {
-  res.status(404).send('Page not found');
-});
-
-var port = process.env.PORT || 3000;
+let port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log('server up on port: ' + port);
 });
+
+
+
