@@ -3,8 +3,8 @@ const http = require('http');
 const express = require('express');
 const apiKey = process.env.FOODESSENTIALS_API_KEY;
 let sessionId;
-let body = '';
-let upc = '028400071932';
+let foodData = '';
+let upc = '029000073258';
 const foodRouter = module.exports = exports = express.Router();
 
 //Food Essentials requires a session id before a search can be done.  This fetchs the id and parses it out of the res.header.
@@ -19,15 +19,15 @@ foodRouter.get('/session', (req, res) => {
   res.end();
 });
 
-//
+//Retrieve foodData for upc search.
 foodRouter.get('/upcsearch', (req, res) => {
   http.get(`http://api.foodessentials.com/label?u=${upc}&sid=${sessionId}&appid=isItVegan&f=json&api_key=${apiKey}`, (res) => {
     console.log(`Got response: ${res.statusCode}`);
     res.on('data', (chunk) => {
-      body += chunk;
+      foodData += chunk;
     });
     res.on('end', () => {
-      console.log('sweet sweet data', body);
+      console.log('sweet sweet data', foodData);
     });
   }).on('error', (e) => {
     console.log(`Got error: ${e.message}`);
