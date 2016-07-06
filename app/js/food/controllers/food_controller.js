@@ -2,15 +2,16 @@
 
 // const apiKey = process.env.FOODESSENTIALS_API_KEY;
 const apiKey = '';
-let sessionId = 'b733cbf6-8508-44f5-a320-3247745e728b';
+let sessionId = '767b4dda-9cce-486d-abd1-2241bd93d489';
 let foodData = '';
-
-
+// let nonVeganList = require('.../data/scrap.js');
+// console.log (nonVeganList);
 
 module.exports = function(app) {
   app.controller('FoodController', function($http) {
     this.ingredients = '';
     this.allergens = [];
+    this.nonVeganList = {};
 
     this.getToken = function() {
       $http.get(`http://api.foodessentials.com/createsession?uid=uid&devid=did&appid=isItVegan&f=json&api_key=${apiKey}`)
@@ -38,6 +39,24 @@ module.exports = function(app) {
           console.log(`Got error: ${err.message}`);
         });
     }.bind(this);
+
+    this.getList = function(callback) {
+      $http.get('./nonVeganList.json')
+        .then((res) => {
+          console.log ('res: ', res.data);
+          this.nonVeganList = res.data;
+          console.log ('nonVeganList: ', this.nonVeganList);
+          if (callback) callback;
+        }), (err) => {
+          console.log(`Got error: ${err.message}`);
+        };
+    }.bind(this);
+
+    this.getList();
+
+    this.compare = function(ingredients, nonVeganList) {
+
+    };
 
   });
 };
