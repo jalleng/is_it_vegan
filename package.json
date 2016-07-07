@@ -10,33 +10,37 @@
     "type": "git",
     "url": "git+https://github.com/is-it-vegan/is-it-vegan.git"
   },
-  "author": "jag aak dws ssc",
+  "author": "jalleng",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/is-it-vegan/is-it-vegan/issues"
   },
-  "homepage": "https://github.com/is-it-vegan/is-it-vegan#readme",
+  "homepage": "changeme",
   "dependencies": {
-    "body-parser": "^1.13.3",
+    "body-parser": "^1.15.1",
     "dotenv": "^1.2.0",
-    "express": "^4.13.3",
-    "nutritionix": "^0.6.1",
+    "express": "^4.14",
+    "mongoose": "^4.5.0",
     "request": "^2.72.0"
   },
   "devDependencies": {
-    "angular": "^1.4.6",
-    "angular-mocks": "^1.4.7",
+    "angular": "^1.5.6",
+    "angular-mocks": "^1.5.6",
+    "cors": "^2.7.1",
+    "css-loader": "^0.23.1",
     "chai": "^3.2.0",
     "chai-http": "^1.0.0",
+    "del": "^2.2.0",
     "gulp": "^3.9.0",
     "gulp-jshint": "^1.11.2",
     "gulp-mocha": "^2.1.3",
-    "jasmine-core": "^2.3.4",
+    "jasmine-core": "^2.4.1",
     "karma": "^0.13.10",
-    "karma-jasmine": "^0.3.6",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-mocha-reporter": "^2.0.4",
     "karma-phantomjs-launcher": "^0.2.1",
     "mocha": "^2.3.2",
     "phantomjs": "^1.9.18",
-    "webpack-stream": "^2.1.1"
+    "webpack-stream": "^3.2.0"
   }
 }
