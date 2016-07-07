@@ -1,59 +1,33 @@
-var gulp = require('gulp');
-var mocha = require('gulp-mocha');
-var webpack = require('webpack-stream');
-var Karma = require('karma').Server;
+const gulp = require('gulp');
+const del = require('del');
+const webpack = require('webpack-stream');
 
-gulp.task('webpack:dev', function() {
-  return gulp.src('./app/js/client.js')
-    .pipe(webpack({
-      output: {
-        filename: 'bundle.js'
-      }
-    }))
-    .pipe(gulp.dest('build/'));
+const paths = {
+  html: './app/**/*.html',
+  js: './app/js/client.js',
+  json: './data/nonVeganList.json'
+  // tests: './test/error_service_test.js'
+};
+
+gulp.task('bundle', ['clean'], () => {
+  return gulp.src(paths.js)
+    .pipe(webpack({output:{filename: 'bundle.js'}}))
+    .pipe(gulp.dest('build'));
 });
 
-gulp.task('webpack:test', function() {
-  return gulp.src('./test/client/entry.js')
-  .pipe(webpack({
-    output: {
-      filename: 'test_bundle.js'
-    }
-  }))
-  .pipe(gulp.dest('test/client'));
+gulp.task('clean', () => {
+  return del('./build/**/*');
 });
 
-gulp.task('staticfiles:dev', function() {
-  return gulp.src(['./app/**/*.html', './app/**/*.css'])
-    .pipe(gulp.dest('build/'))
+gulp.task('copy', ['clean'],() => {
+  return gulp.src([paths.html, paths.json])
+    .pipe(gulp.dest('./build'));
 });
 
-gulp.task('servertests', function() {
-  return gulp.src('./test/api_test/**/*test.js')
-    .pipe(mocha({reporter: 'nyan'}))
-    .once('error', function(err) {
-      console.log(err);
-      process.exit(1);
-    })
-    .once('end', function() {
-      if (this.seq.length === 1 && this.seq[0] === 'servertests')
-        process.exit();
-    }.bind(this));
+gulp.task('bundle:test', () => {
+  return gulp.src(paths.tests)
+    .pipe(webpack({output:{filename: 'test_bundle.js'}}))
+    .pipe(gulp.dest('./test'));
 });
 
-gulp.task('karmatests', ['webpack:test'], function(done) {
-  new Karma({
-    configFile: __dirname + '/karma.conf.js'
-  }, done).start();
-});
-
-gulp.task('watch', function() {
-  return gulp.watch(['./app/js/client.js', './app/**/*.html'], ['build:dev']);
-});
-
-
-gulp.task('build:dev', ['staticfiles:dev', 'webpack:dev']);
-gulp.task('default', ['build:dev']);
-
-
-
+gulp.task('default', ['bundle', 'clean', 'copy']);
