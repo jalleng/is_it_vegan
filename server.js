@@ -1,6 +1,7 @@
 'use strict';
 
-require('express')().use(require('express').static('./build')).listen(3000);
+let port = process.env.PORT || 3000;
+require('express')().use(require('express').static('./build')).listen(port);
 
 
 
