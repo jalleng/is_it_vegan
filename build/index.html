@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>isItVegan?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style> 
+      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+      }
+    </style>
+    <!-- <link rel="stylesheet" href="styles/main.css"> -->
+  </head>
+  <body ng-app="FoodApp">
+    <main ng-controller="FoodController as foodctrl">
+      <h1>Enter a upc to search</h1>
+      <form ng-submit="foodctrl.search(upc)">
+        <input type="text" ng-model="upc"/>
+        <button type="submit">Search</button>
+      </form> 
+      <ul>
+        <li ng-repeat="ingredient in foodctrl.matchingIngredients" class="ng-cloak">{{ingredient}}</li>
+      </ul>
+      <p>
+        044300106253</br>
+        051000025494</br>
+        041364001043</br>
+        014100096559</br>
+        893869003554</br>
+        011110819376</br>
+        048867312164</br>
+        013562300846</br>
+        013562000043</br>
+        072486002205</br>
+        041789002120</br>
+        041789002113
+      </p>
+    </main>
+    <script src="./bundle.js"></script>
+  </body>
+</html>
+
