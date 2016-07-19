@@ -3,5 +3,5 @@
 **/db
 **/.DS_Store
 **/test_bundle.js
-**/bundle.js
+
 **/.env
