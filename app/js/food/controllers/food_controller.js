@@ -1,11 +1,8 @@
 'use strict';
 
-// const apiKey = process.env.FOODESSENTIALS_API_KEY;
-const apiKey = '';
-let sessionId = '767b4dda-9cce-486d-abd1-2241bd93d489';
+// let sessionId = '767b4dda-9cce-486d-abd1-2241bd93d489';
 let foodData = '';
-// let nonVeganList = require('.../data/scrap.js');
-// console.log (nonVeganList);
+
 
 module.exports = function(app) {
   app.controller('FoodController', function($http) {
@@ -14,6 +11,8 @@ module.exports = function(app) {
     this.nonVeganList = {};
     this.matchingIngredients = [];
 
+
+    // Move this function to server so it has access to apikey
     this.getToken = function() {
       $http.get(`http://api.foodessentials.com/createsession?uid=uid&devid=did&appid=isItVegan&f=json&api_key=${apiKey}`)
         .then((res) => {   
@@ -39,19 +38,29 @@ module.exports = function(app) {
     };
 
     this.search = function(upc) {
-      $http.get(`http://api.foodessentials.com/label?u=${upc}&sid=${sessionId}&appid=isItVegan&f=json&api_key=${apiKey}`)
+      $http({
+        mathod: 'GET',
+        url: '/search',
+        headers: {
+          'upc': upc
+        }
+      })
         .then((res) => {
+          console.log('from controller', res.data);
           foodData = res.data;
           this.allergens = foodData.allergens;
-          this.ingredients = foodData.ingredients.split(',').join('').split(' '); // removes random commas         
+          console.log('allergens', this.allergens);
+          this.ingredients = foodData.ingredients.split(',').join('').split(' '); // removes random commas   
+          console.log('ingredients', this.ingredients);      
           this.ingredientsLower = this.ingredients.map(function(item) {           // standardize text
             return item.toLowerCase();
           });
+          console.log('ingredientsLower', this.ingredientsLower);
           this.ingredientsUnique = this.removeDupes(this.ingredientsLower);       // removes duplicate items from the array
           console.log('Unique', this.ingredientsUnique);   
           this.returnMatches(this.ingredientsUnique);
         }, (err) => {
-          console.log(`Got error: ${err.message}`);
+          console.log(`Got error1: ${err.message}`);
         });
     }.bind(this);
 
@@ -81,21 +90,3 @@ module.exports = function(app) {
   });
 };
 
-// **************************************** 
-
-//sample upc = 029000073258
-
-
-// ["PEANUTS", " CONTAINS 2% OR LESS OF SEA SALT", " SPICES (CONTAINS CELERY)", " DRIED ONION", " DRIED GARLIC", " PAPRIKA", " NATURAL FLAVOR", " SUGAR", " CORNSTARCH", " GELATIN", " TORULA YEAST", " MALTODEXTRIN", " DRIED CORN SYRUP."]
-
-// Object {
-// albumen: "The protein component of egg whites", 
-// albumin: "The protein component of egg whites", 
-// acetate: "Can come from fish liver oil", 
-// acetylated_hydrogenated_lard_glyceride: "From ", 
-// adrenaline: "From the adrenals of hogs, cattle, and sheep",
-
-// acetate:"Can come from fish liver oil",
-// acetylated_hydrogenated_lard_glyceride:"From ",
-// adrenaline:"From the adrenals of hogs, cattle, and sheep",
-// };
