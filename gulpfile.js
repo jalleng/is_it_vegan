@@ -5,7 +5,8 @@ const webpack = require('webpack-stream');
 const paths = {
   html: './app/**/*.html',
   js: './app/js/client.js',
-  json: './data/nonVeganList.json'
+  json: './data/nonVeganList.json',
+  css: './app/styles/main.css'
   // tests: './test/error_service_test.js'
 };
 
@@ -20,7 +21,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('copy', ['clean'],() => {
-  return gulp.src([paths.html, paths.json])
+  return gulp.src([paths.html, paths.json, paths.css])
     .pipe(gulp.dest('./build'));
 });
 

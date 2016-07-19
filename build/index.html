@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <title>isItVegan?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style> 
-      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-        display: none !important;
-      }
-    </style>
+    <link type="text/css" rel="stylesheet" href="main.css"/>
     <!-- <link rel="stylesheet" href="styles/main.css"> -->
   </head>
   <body ng-app="FoodApp">
@@ -18,9 +14,12 @@
         <input type="text" ng-model="upc"/>
         <button type="submit">Search</button>
       </form> 
-      <ul>
-        <li ng-repeat="ingredient in foodctrl.matchingIngredients" class="ng-cloak">{{ingredient}}</li>
-      </ul>
+      <section>
+        <h3> This item contains the following non-vegan ingredients:</h3>
+        <ul>
+          <li ng-repeat="ingredient in foodctrl.matchingIngredients" class="ng-cloak">{{ingredient}}</li>
+        </ul>
+      </section>
       <p>
         044300106253</br>
         051000025494</br>

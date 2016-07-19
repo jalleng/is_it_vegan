@@ -21,8 +21,8 @@ app.get('/search', function(req,res) {
       foodData.push(chunk);
     });
     apiResponse.on('end', function() {         //fix this. it is firing asynchronously.
-      console.log('unparsed', foodData);
-      res.json(JSON.parse(foodData));
+      console.log('unparsed', foodData);      
+      res.json(JSON.parse(foodData));       
     });
   });  
 });
