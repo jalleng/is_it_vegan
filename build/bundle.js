@@ -31597,7 +31597,7 @@
 
 	    this.search = function(upc) {
 	      $http({
-	        mathod: 'GET',
+	        method: 'GET',
 	        url: '/search',
 	        headers: {
 	          'upc': upc
@@ -31606,17 +31606,19 @@
 	        .then((res) => {
 	          console.log('from controller', res.data);
 	          foodData = res.data;
-	          this.allergens = foodData.allergens;
-	          console.log('allergens', this.allergens);
-	          this.ingredients = foodData.ingredients.split(',').join('').split(' '); // removes random commas   
-	          console.log('ingredients', this.ingredients);      
-	          this.ingredientsLower = this.ingredients.map(function(item) {           // standardize text
-	            return item.toLowerCase();
-	          });
-	          console.log('ingredientsLower', this.ingredientsLower);
-	          this.ingredientsUnique = this.removeDupes(this.ingredientsLower);       // removes duplicate items from the array
-	          console.log('Unique', this.ingredientsUnique);   
-	          this.returnMatches(this.ingredientsUnique);
+	          if (foodData.ingredients) {
+	            this.allergens = foodData.allergens;
+	            this.ingredients = foodData.ingredients.split(',').join('').split(' '); // removes random commas         
+	            this.ingredientsLower = this.ingredients.map(function(item) {           // standardize text
+	              return item.toLowerCase();
+	            });
+	            this.ingredientsUnique = this.removeDupes(this.ingredientsLower);       // removes duplicate items from the array
+	            this.returnMatches(this.ingredientsUnique);
+	          }
+	          else {
+	            this.matchingIngredients = ['Sorry there is no data available for this product.'];
+	          }
+	          this.matchingIngredients = this.matchingIngredients.length > 0 ? this.matchingIngredients : ['No non-vegan ingredients found'];
 	        }, (err) => {
 	          console.log(`Got error1: ${err.message}`);
 	        });
@@ -31626,7 +31628,6 @@
 	      $http.get('./nonVeganList.json')
 	        .then((res) => {
 	          this.nonVeganList = res.data;
-	          console.log ('nonVeganList: ', this.nonVeganList);
 	          if (callback) callback;
 	        }), (err) => {
 	          console.log(`Got error: ${err.message}`);
@@ -31643,7 +31644,6 @@
 
 	    this.returnMatches = function(ingredients) {
 	      this.matchingIngredients = ingredients.filter(this.filter, this);
-	      console.log('Matching Ingredients!', this.matchingIngredients);
 	    };
 	  });
 	};

@@ -22,7 +22,7 @@ app.get('/search', function(req,res) {
     });
     apiResponse.on('end', function() {         //fix this. it is firing asynchronously.
       console.log('unparsed', foodData);      
-      res.json(JSON.parse(foodData));       
+      res.json(JSON.parse(foodData));      
     });
   });  
 });
