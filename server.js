@@ -1,12 +1,11 @@
 'use strict';
 
-require('express')().use(require('express').static('./build')).listen(8080);
+require('express')().use(require('express').static('./build')).listen(3000);
 
 
 
 
-
-// require('dotenv').load({silent: true}); //loads environment variables defined in .env; for use in development; detects that .env exists
+require('dotenv').load({silent: true}); //loads environment variables defined in .env; for use in development; detects that .env exists
 
 // const express = require('express');
 // const app = express();
