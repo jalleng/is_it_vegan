@@ -9,7 +9,8 @@
   </head>
   <body ng-app="FoodApp">
     <main ng-controller="FoodController as foodctrl">
-      <h1>Enter a upc to search</h1>
+      <h1> Is It Vegan?</h1>
+      <h2>Enter a upc to search</h2>
       <form ng-submit="foodctrl.search(upc)">
         <input type="text" ng-model="upc"/>
         <button type="submit">Search</button>
@@ -21,6 +22,8 @@
         </ul>
       </section>
       <p>
+        Sample UPC's</br>
+                    </br>
         044300106253</br>
         051000025494</br>
         041364001043</br>

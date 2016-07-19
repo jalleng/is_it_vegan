@@ -6,7 +6,7 @@ const paths = {
   html: './app/**/*.html',
   js: './app/js/client.js',
   json: './data/nonVeganList.json',
-  css: './app/styles/main.css'
+  css: './app/styles/*.css'
   // tests: './test/error_service_test.js'
 };
 
