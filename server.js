@@ -12,22 +12,26 @@ app.use(express.static(__dirname + '/build'));
 
 app.get('/search', function(req,res) {
   let upc = req.headers.upc;
-  let foodData = [];
+  //let foodData = [];
+  let foodData = '';
   let searchUrl = `http://api.foodessentials.com/label?u=${upc}&sid=${sessionId}&appid=isItVegan&f=json&api_key=${apiKey}`;
   
   http.get(searchUrl, function(apiResponse) {
     apiResponse.setEncoding('utf8');
     res.status(apiResponse.statusCode);
+
     apiResponse.on('data', function (chunk) {
-      foodData.push(chunk);
+      //foodData.push(chunk);
+      foodData = foodData + chunk;
+      // console.log('foodData', foodData);
     });
     apiResponse.on('end', function() {         //fix this. it is firing asynchronously.
-      console.log('unparsed', foodData);
-      console.log('type', Array.isArray(foodData)); 
-      let joined = foodData.join(',');
-      // console.log('buf', buf);
-      console.log('joined', joined);
-      res.send(joined);      
+      // console.log('unparsed', foodData);
+      // console.log('type', Array.isArray(foodData)); 
+      // let joined = foodData.join(',');
+      // // console.log('buf', buf);
+      // console.log('joined', joined);
+      res.send(foodData);      
     });
   });
 
