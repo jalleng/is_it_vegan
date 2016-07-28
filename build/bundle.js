@@ -31564,6 +31564,7 @@
 
 	module.exports = function(app) {
 	  app.controller('FoodController', function($http) {
+	    
 	    this.ingredients = '';
 	    this.allergens = [];
 	    this.nonVeganList = {};
