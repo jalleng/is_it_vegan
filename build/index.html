@@ -11,10 +11,10 @@
     <main ng-controller="FoodController as foodctrl">
       <h1> Is It Vegan?</h1>
       <h2>Enter a upc to search</h2>
-      <ng-submit ng-submit="foodctrl.search(upc)">
+      <form ng-submit="foodctrl.search(upc)" onsubmit="return false">
         <input type="text" ng-model="upc"/>
         <input type="submit" value="Search"/>
-      </ng-submit> 
+      </form> 
       <section>
         <h3> This item contains the following non-vegan ingredients:</h3>
         <ul>
