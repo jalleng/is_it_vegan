@@ -1,18 +1,19 @@
 'use strict';
 
-// const apiKey = process.env.FOODESSENTIALS_API_KEY;
-const apiKey = '';
-let sessionId = '767b4dda-9cce-486d-abd1-2241bd93d489';
+// let sessionId = '767b4dda-9cce-486d-abd1-2241bd93d489';
 let foodData = '';
-// let nonVeganList = require('.../data/scrap.js');
-// console.log (nonVeganList);
+
 
 module.exports = function(app) {
   app.controller('FoodController', function($http) {
+    
     this.ingredients = '';
     this.allergens = [];
     this.nonVeganList = {};
+    this.matchingIngredients = [];
 
+
+    // Move this function to server so it has access to apikey
     this.getToken = function() {
       $http.get(`http://api.foodessentials.com/createsession?uid=uid&devid=did&appid=isItVegan&f=json&api_key=${apiKey}`)
         .then((res) => {   
@@ -23,29 +24,53 @@ module.exports = function(app) {
         });
     }.bind(this);
 
+    this.removeDupes = function(ingredients) {
+      let hasSeen = {};
+      let uniques = [];
+      for (let i = 0; i < ingredients.length; i++ ) {
+        hasSeen[ingredients[i]] = 'seen';
+      }
+      for (let key in hasSeen) {
+        if (hasSeen.hasOwnProperty(key)) {
+          uniques.push(key);
+        }
+      }
+      return uniques;
+    };
 
     this.search = function(upc) {
-      $http.get(`http://api.foodessentials.com/label?u=${upc}&sid=${sessionId}&appid=isItVegan&f=json&api_key=${apiKey}`)
+      $http({
+        method: 'GET',
+        url: '/search',
+        headers: {
+          'upc': upc
+        }
+      })
         .then((res) => {
+          console.log('from controller', res.data);
           foodData = res.data;
-          this.ingredients = foodData.ingredients;
-          this.allergens = foodData.allergens;
-
-          console.log('foodData', foodData);
-          console.log('ingredients', this.ingredients);
-          console.log('allergens', this.allergens);
-
+          if (foodData.ingredients) {
+            this.allergens = foodData.allergens;
+            this.ingredients = foodData.ingredients.split(',').join('').split(' '); // removes random commas         
+            this.ingredientsLower = this.ingredients.map(function(item) {           // standardize text
+              return item.toLowerCase();
+            });
+            this.ingredientsUnique = this.removeDupes(this.ingredientsLower);       // removes duplicate items from the array
+            this.returnMatches(this.ingredientsUnique);
+          }
+          else {
+            this.matchingIngredients = ['Sorry there is no data available for this product.'];
+          }
+          this.matchingIngredients = this.matchingIngredients.length > 0 ? this.matchingIngredients : ['No non-vegan ingredients found'];
         }, (err) => {
-          console.log(`Got error: ${err.message}`);
+          console.log(`Got error1: ${err.message}`);
         });
     }.bind(this);
 
     this.getList = function(callback) {
       $http.get('./nonVeganList.json')
         .then((res) => {
-          console.log ('res: ', res.data);
           this.nonVeganList = res.data;
-          console.log ('nonVeganList: ', this.nonVeganList);
           if (callback) callback;
         }), (err) => {
           console.log(`Got error: ${err.message}`);
@@ -54,16 +79,15 @@ module.exports = function(app) {
 
     this.getList();
 
-    this.compare = function(ingredients, nonVeganList) {
-
+    this.filter = function(ingredient) {
+      if (ingredient in this.nonVeganList){
+        return true;
+      }
     };
 
+    this.returnMatches = function(ingredients) {
+      this.matchingIngredients = ingredients.filter(this.filter, this);
+    };
   });
 };
-
-// **************************************** 
-
-//sample upc = 029000073258
-
-
 

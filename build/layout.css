@@ -1,0 +1,38 @@
+
+
+/** {
+  border: 1px dotted orange;
+}*/
+
+h1 {
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+  margin-top: 0;
+  text-align: center;
+  height: 45px;
+}
+
+h2 {
+  text-align: center;
+}
+
+body {
+  background-color: ;
+}
+
+p {
+  border: 2px solid black;
+}
+
+form {
+  text-align: center;
+}
+
+section {
+  text-align: center;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
