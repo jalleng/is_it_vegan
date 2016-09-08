@@ -1,3 +1,3 @@
-module.exports = function(app) {
-  require('./food_directive')(app);
-};
+// module.exports = function(app) {
+//   require('./food_directive')(app);
+// };

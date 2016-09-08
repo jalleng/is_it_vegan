@@ -9,6 +9,8 @@ module.exports = function(app) {
     
     this.ingredients = '';
     this.allergens = [];
+    this.veganList = {};
+    this.middleList = {};
     this.nonVeganList = {};
     this.matchingIngredients = [];
 
@@ -71,6 +73,25 @@ module.exports = function(app) {
       $http.get('./nonVeganList.json')
         .then((res) => {
           this.nonVeganList = res.data;
+          console.log('nvl', this.nonVeganList);
+          if (callback) callback;
+        }), (err) => {
+          console.log(`Got error: ${err.message}`);
+        };
+
+      $http.get('./veganList.json')
+        .then((res) => {
+          this.veganList = res.data;
+          console.log('vl', this.veganList);
+          if (callback) callback;
+        }), (err) => {
+          console.log(`Got error: ${err.message}`);
+        };
+
+      $http.get('./middleList.json')
+        .then((res) => {
+          this.middleList = res.data;
+          console.log('ml', this.middleList);
           if (callback) callback;
         }), (err) => {
           console.log(`Got error: ${err.message}`);

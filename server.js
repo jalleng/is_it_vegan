@@ -24,7 +24,7 @@ app.get('/search', function(req,res) {
     apiResponse.on('data', function (chunk) {
       foodData = foodData + chunk;
     });
-    apiResponse.on('end', function() {         //fix this. it is firing asynchronously.
+    apiResponse.on('end', function() {
       res.send(foodData);      
     });
   });
