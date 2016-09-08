@@ -5,7 +5,7 @@ const webpack = require('webpack-stream');
 const paths = {
   html: './app/**/*.html',
   js: './app/js/client.js',
-  json: './data/nonVeganList.json',
+  json: './data/*.json',
   css: './app/styles/*.css'
   // tests: './test/error_service_test.js'
 };
