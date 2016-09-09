@@ -9,7 +9,13 @@
   </head>
   <body ng-app="FoodApp">
     <main ng-controller="FoodController as foodctrl">
-      <h1> Is It Vegan?</h1>
+      <h1>Is It Vegan?</h1>
+
+      <p>The goal of this application is to help you determine if there are ingredients in your food item that are not vegan.</br>
+        Some ingredients can be made from both vegan and non-vegan sources, depending on the manufacture of the ingredient.</br>
+        When a UPC is entered two lists will be displayed.  One list of ingredients that are not vegan and one list that might not be vegan.
+      </p>
+
       <h2>Enter a upc to search</h2>
       
       <form data-ng-submit="foodctrl.search(upc)" onsubmit="return false">
@@ -17,9 +23,15 @@
         <input type="submit"/>
       </form>
       <section>
-        <h3> This item contains the following non-vegan ingredients:</h3>
+        <h3> This item contains the following ingredients that are non-vegan:</h3>
         <ul>
-          <li ng-repeat="ingredient in foodctrl.matchingIngredients" class="ng-cloak">{{ingredient}}</li>
+          <li ng-repeat="ingredient in foodctrl.nonVeganIngredients" class="ng-cloak">{{ingredient}}</li>
+        </ul>
+      </section>
+      <section>
+        <h3> This item contains the following ingredients that may be non-vegan:</h3>
+        <ul>
+          <li ng-repeat="ingredient in foodctrl.maybeIngredients" class="ng-cloak">{{ingredient}}</li>
         </ul>
       </section>
     </main>
