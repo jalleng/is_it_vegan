@@ -31893,9 +31893,6 @@
 	      return uniques;
 	    };
 
-	    // this.test = function() {
-	    //   $('h1').css("color", "red");
-	    // };
 
 	    this.search = function(upc) {
 	      $http({
