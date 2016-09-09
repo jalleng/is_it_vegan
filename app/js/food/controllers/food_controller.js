@@ -12,8 +12,8 @@ module.exports = function(app) {
     this.veganList = {};
     this.middleList = {};
     this.nonVeganList = {};
-    this.matchingIngredients = [];
-
+    this.nonVeganIngredients = [];
+    this.maybeIngredients = [];
 
     // Move this function to server so it has access to apikey
     this.getToken = function() {
@@ -62,9 +62,11 @@ module.exports = function(app) {
             this.returnMatches(this.ingredientsUnique);
           }
           else {
-            this.matchingIngredients = ['Sorry there is no data available for this product.'];
+            this.nonVeganIngredients = ['Sorry there is no data available for this product.'];
+            this.maybeIngredients = ['Sorry there is no data available for this product.'];
           }
-          this.matchingIngredients = this.matchingIngredients.length > 0 ? this.matchingIngredients : ['No non-vegan ingredients found'];
+          this.nonVeganIngredients = this.nonVeganIngredients.length > 0 ? this.nonVeganIngredients : ['No ingredients found that are non-vegan'];
+          this.maybeIngredients = this.maybeIngredients.length > 0 ? this.maybeIngredients : ['No ingredients found that might be non-vegan'];
         }, (err) => {
           console.log(`Got error1: ${err.message}`);
         });
@@ -101,14 +103,21 @@ module.exports = function(app) {
 
     this.getList();
 
-    this.filter = function(ingredient) {
+    this.nonVeganFilter = function(ingredient) {
       if (ingredient in this.nonVeganList){
         return true;
       }
     };
 
+    this.maybeFilter = function(ingredient) {
+      if (ingredient in this.maybeIngredients){
+        return true;
+      }
+    };
+
     this.returnMatches = function(ingredients) {
-      this.matchingIngredients = ingredients.filter(this.filter, this);
+      this.nonVeganIngredients = ingredients.filter(this.nonVeganFilter, this);
+      this.maybeIngredients = ingredients.filter(this.maybeFilter, this);
     };
   });
 };
