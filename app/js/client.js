@@ -1,4 +1,4 @@
-const angular = require('angular');
-const app = angular.module('FoodApp', []);
+var angular = require('angular');
+var app = angular.module('FoodApp', []);
 
 require('./food')(app);
