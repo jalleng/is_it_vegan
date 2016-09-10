@@ -21,7 +21,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('copy', ['clean'],() => {
-  return gulp.src([paths.html, paths.json])
+  return gulp.src([paths.html, paths.json, paths.css])
     .pipe(gulp.dest('./build'));
 });
 
