@@ -31854,7 +31854,7 @@
 	'use strict';
 
 	// let sessionId = '767b4dda-9cce-486d-abd1-2241bd93d489';
-	let foodData = '';
+	var foodData = '';
 
 
 	module.exports = function(app) {
