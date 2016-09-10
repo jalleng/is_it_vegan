@@ -18,9 +18,9 @@
 
       <h2>Enter a upc to search</h2>
       
-      <form data-ng-submit="foodctrl.search(upc)" onsubmit="return false">
-        <input type="text" data-ng-model="upc"/>
-        <input type="submit"/>
+      <form ng-submit="foodctrl.search(upc)">
+        <input type="text" ng-model="upc"/>
+        <input type="submit" id="submit" value="Submit" />
       </form>
       <section>
         <h3> This item contains the following ingredients that are non-vegan:</h3>
