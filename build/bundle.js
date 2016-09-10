@@ -44,8 +44,8 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	const angular = __webpack_require__(1);
-	const app = angular.module('FoodApp', []);
+	var angular = __webpack_require__(1);
+	var app = angular.module('FoodApp', []);
 
 	__webpack_require__(3)(app);
 
