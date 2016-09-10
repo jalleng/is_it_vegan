@@ -18,7 +18,7 @@
 
       <h2>Enter a upc to search</h2>
       
-      <form ng-submit="foodctrl.search(upc)">
+      <form ng-submit="foodctrl.search(upc)" onsubmit="return false">
         <input type="text" ng-model="upc"/>
         <input type="submit" id="submit" value="Submit" />
       </form>
