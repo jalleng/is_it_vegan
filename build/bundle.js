@@ -31871,10 +31871,10 @@
 	    // Move this function to server so it has access to apikey
 	    this.getToken = function() {
 	      $http.get(`http://api.foodessentials.com/createsession?uid=uid&devid=did&appid=isItVegan&f=json&api_key=${apiKey}`)
-	        .then((res) => {   
+	        .then(function(res) {   
 	          sessionId = res.data.session_id;
 	          console.log('SessionId: ', sessionId);
-	        }, (err) => {
+	        }, function(err) {
 	          console.log(`Got error: ${err.message}`);
 	        });
 	    }.bind(this);
@@ -31902,7 +31902,7 @@
 	          'upc': upc
 	        }
 	      })
-	        .then((res) => {
+	        .then(function(res) {
 	          console.log('from controller', res.data);
 	          foodData = res.data;
 	          if (foodData.ingredients) {
@@ -31920,36 +31920,36 @@
 	          }
 	          this.nonVeganIngredients = this.nonVeganIngredients.length > 0 ? this.nonVeganIngredients : ['No ingredients found that are non-vegan'];
 	          this.maybeIngredients = this.maybeIngredients.length > 0 ? this.maybeIngredients : ['No ingredients found that might be non-vegan'];
-	        }, (err) => {
+	        }, function(err) {
 	          console.log(`Got error1: ${err.message}`);
 	        });
 	    }.bind(this);
 
 	    this.getList = function(callback) {
 	      $http.get('./nonVeganList.json')
-	        .then((res) => {
+	        .then(function(res) {
 	          this.nonVeganList = res.data;
 	          console.log('nvl', this.nonVeganList);
 	          if (callback) callback;
-	        }), (err) => {
+	        }), function(err) {
 	          console.log(`Got error: ${err.message}`);
 	        };
 
 	      $http.get('./veganList.json')
-	        .then((res) => {
+	        .then(function(res) {
 	          this.veganList = res.data;
 	          console.log('vl', this.veganList);
 	          if (callback) callback;
-	        }), (err) => {
+	        }), function(err) {
 	          console.log(`Got error: ${err.message}`);
 	        };
 
 	      $http.get('./middleList.json')
-	        .then((res) => {
+	        .then(function(res) {
 	          this.middleList = res.data;
 	          console.log('ml', this.middleList);
 	          if (callback) callback;
-	        }), (err) => {
+	        }), function(err) {
 	          console.log(`Got error: ${err.message}`);
 	        };
 	    }.bind(this);
