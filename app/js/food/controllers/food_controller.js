@@ -12,7 +12,7 @@ module.exports = function(app) {
     this.veganList = {};
     this.middleList = {};
     this.nonVeganList = {};
-    this.nonVeganIngredients = ['katie', 'alice'];
+    this.nonVeganIngredients = [];
     this.maybeIngredients = [];
 
     // Move this function to server so it has access to apikey
