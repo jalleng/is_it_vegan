@@ -31869,15 +31869,15 @@
 	    this.maybeIngredients = [];
 
 	    // Move this function to server so it has access to apikey
-	    this.getToken = function() {
-	      $http.get(`http://api.foodessentials.com/createsession?uid=uid&devid=did&appid=isItVegan&f=json&api_key=${apiKey}`)
-	        .then((res) => {   
-	          sessionId = res.data.session_id;
-	          console.log('SessionId: ', sessionId);
-	        }, (err) => {
-	          console.log(`Got error: ${err.message}`);
-	        });
-	    }.bind(this);
+	    // this.getToken = function() {
+	    //   $http.get(`http://api.foodessentials.com/createsession?uid=uid&devid=did&appid=isItVegan&f=json&api_key=${apiKey}`)
+	    //     .then((res) => {   
+	    //       sessionId = res.data.session_id;
+	    //       console.log('SessionId: ', sessionId);
+	    //     }, (err) => {
+	    //       console.log(`Got error: ${err.message}`);
+	    //     });
+	    // }.bind(this);
 
 	    this.removeDupes = function(ingredients) {
 	      let hasSeen = {};
