@@ -74,29 +74,29 @@ module.exports = function(app) {
 
     this.getList = function(callback) {
       $http.get('./nonVeganList.json')
-        .then((res) => {
+        .then(function(res) {
           this.nonVeganList = res.data;
           console.log('nvl', this.nonVeganList);
           if (callback) callback;
-        }), (err) => {
+        }), function(err) {
           console.log(`Got error: ${err.message}`);
         };
 
       $http.get('./veganList.json')
-        .then((res) => {
+        .then(function(res) {
           this.veganList = res.data;
           console.log('vl', this.veganList);
           if (callback) callback;
-        }), (err) => {
+        }), function(err) {
           console.log(`Got error: ${err.message}`);
         };
 
       $http.get('./middleList.json')
-        .then((res) => {
+        .then(function(res) {
           this.middleList = res.data;
           console.log('ml', this.middleList);
           if (callback) callback;
-        }), (err) => {
+        }), function(err) {
           console.log(`Got error: ${err.message}`);
         };
     }.bind(this);
