@@ -29,10 +29,10 @@ module.exports = function(app) {
     this.removeDupes = function(ingredients) {
       var hasSeen = {};
       var uniques = [];
-      for (let i = 0; i < ingredients.length; i++ ) {
+      for (var i = 0; i < ingredients.length; i++ ) {
         hasSeen[ingredients[i]] = 'seen';
       }
-      for (let key in hasSeen) {
+      for (var key in hasSeen) {
         if (hasSeen.hasOwnProperty(key)) {
           uniques.push(key);
         }
