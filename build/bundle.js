@@ -31895,6 +31895,7 @@
 
 
 	    this.search = function(upc) {
+	      var self = this;
 	      $http({
 	        method: 'GET',
 	        url: '/search',
@@ -31906,30 +31907,31 @@
 	          console.log('from controller', res.data);
 	          foodData = res.data;
 	          if (foodData.ingredients) {
-	            this.allergens = foodData.allergens;
-	            this.ingredients = foodData.ingredients.split(',').join('').split(' '); // removes random commas         
-	            this.ingredientsLower = this.ingredients.map(function(item) {           // standardize text
+	            self.allergens = foodData.allergens;
+	            self.ingredients = foodData.ingredients.split(',').join('').split(' '); // removes random commas         
+	            self.ingredientsLower = self.ingredients.map(function(item) {           // standardize text
 	              return item.toLowerCase();
 	            });
-	            this.ingredientsUnique = this.removeDupes(this.ingredientsLower);       // removes duplicate items from the array
-	            this.returnMatches(this.ingredientsUnique);
+	            self.ingredientsUnique = self.removeDupes(self.ingredientsLower);       // removes duplicate items from the array
+	            self.returnMatches(self.ingredientsUnique);
 	          }
 	          else {
-	            this.nonVeganIngredients = ['Sorry there is no data available for this product.'];
-	            this.maybeIngredients = ['Sorry there is no data available for this product.'];
+	            self.nonVeganIngredients = ['Sorry there is no data available for this product.'];
+	            self.maybeIngredients = ['Sorry there is no data available for this product.'];
 	          }
-	          this.nonVeganIngredients = this.nonVeganIngredients.length > 0 ? this.nonVeganIngredients : ['No ingredients found that are non-vegan'];
-	          this.maybeIngredients = this.maybeIngredients.length > 0 ? this.maybeIngredients : ['No ingredients found that might be non-vegan'];
+	          self.nonVeganIngredients = self.nonVeganIngredients.length > 0 ? self.nonVeganIngredients : ['No ingredients found that are non-vegan'];
+	          self.maybeIngredients = self.maybeIngredients.length > 0 ? self.maybeIngredients : ['No ingredients found that might be non-vegan'];
 	        }, function(err) {
 	          console.log(`Got error1: ${err.message}`);
 	        });
 	    }.bind(this);
 
 	    this.getList = function(callback) {
+	      var self = this;
 	      $http.get('./nonVeganList.json')
 	        .then(function(res) {
-	          this.nonVeganList = res.data;
-	          console.log('nvl', this.nonVeganList);
+	          self.nonVeganList = res.data;
+	          console.log('nvl', self.nonVeganList);
 	          if (callback) callback;
 	        }), function(err) {
 	          console.log(`Got error: ${err.message}`);
@@ -31937,8 +31939,8 @@
 
 	      $http.get('./veganList.json')
 	        .then(function(res) {
-	          this.veganList = res.data;
-	          console.log('vl', this.veganList);
+	          self.veganList = res.data;
+	          console.log('vl', self.veganList);
 	          if (callback) callback;
 	        }), function(err) {
 	          console.log(`Got error: ${err.message}`);
@@ -31946,8 +31948,8 @@
 
 	      $http.get('./middleList.json')
 	        .then(function(res) {
-	          this.middleList = res.data;
-	          console.log('ml', this.middleList);
+	          self.middleList = res.data;
+	          console.log('ml', self.middleList);
 	          if (callback) callback;
 	        }), function(err) {
 	          console.log(`Got error: ${err.message}`);
