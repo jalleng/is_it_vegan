@@ -31880,8 +31880,8 @@
 	    // }.bind(this);
 
 	    this.removeDupes = function(ingredients) {
-	      let hasSeen = {};
-	      let uniques = [];
+	      var hasSeen = {};
+	      var uniques = [];
 	      for (let i = 0; i < ingredients.length; i++ ) {
 	        hasSeen[ingredients[i]] = 'seen';
 	      }
