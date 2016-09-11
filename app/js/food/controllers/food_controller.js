@@ -49,7 +49,7 @@ module.exports = function(app) {
           'upc': upc
         }
       })
-        .then((res) => {
+        .then(function(res) {
           console.log('from controller', res.data);
           foodData = res.data;
           if (foodData.ingredients) {
@@ -67,7 +67,7 @@ module.exports = function(app) {
           }
           this.nonVeganIngredients = this.nonVeganIngredients.length > 0 ? this.nonVeganIngredients : ['No ingredients found that are non-vegan'];
           this.maybeIngredients = this.maybeIngredients.length > 0 ? this.maybeIngredients : ['No ingredients found that might be non-vegan'];
-        }, (err) => {
+        }, function(err) {
           console.log(`Got error1: ${err.message}`);
         });
     }.bind(this);
