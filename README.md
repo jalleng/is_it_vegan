@@ -1,3 +1,2 @@
-#An app that scans barcodes and alerts if non-vegan items are contained in the ingredients.
-This app is a work in process. Currently deployed at:
+#An app that alerts the user to ingredients in their food that are non-vegan. A work in progress currently deployed at:
 [vegancheck.herokuapp.com](https://vegancheck.herokuapp.com)
