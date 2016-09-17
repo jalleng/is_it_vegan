@@ -11,7 +11,7 @@ let apiKey = process.env.FOODESSENTIALS_API_KEY;
 app.use(cors());
 app.use(express.static(__dirname + '/build'));
 
-app.get('/search', function(req,res) {
+app.get('/upc', function(req,res) {
   let upc = req.headers.upc;
   let foodData = '';
   let searchUrl = `http://api.foodessentials.com/label?u=${upc}&sid=${sessionId}&appid=isItVegan&f=json&api_key=${apiKey}`;
@@ -25,6 +25,25 @@ app.get('/search', function(req,res) {
     });
     apiResponse.on('end', function() {
       res.send(foodData);      
+    });
+  });
+});
+
+app.get('/text', function(req,res) {
+  let text = req.headers.text;
+  let productData = '';
+  let searchUrl = `http://api.foodessentials.com/searchprods?q=${text}&sid=${sessionId}&n=5&s=1&f=json&v=2.00&api_key=${apiKey}`;
+  
+
+  http.get(searchUrl, function(apiResponse) {
+    apiResponse.setEncoding('utf8');
+    res.status(apiResponse.statusCode);
+
+    apiResponse.on('data', function (chunk) {
+      productData = productData + chunk;
+    });
+    apiResponse.on('end', function() {
+      res.send(productData);      
     });
   });
 });

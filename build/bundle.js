@@ -31894,11 +31894,11 @@
 	    };
 
 
-	    this.search = function(upc) {
+	    this.searchUpc = function(upc) {
 	      var self = this;
 	      $http({
 	        method: 'GET',
-	        url: '/search',
+	        url: '/upc',
 	        headers: {
 	          'upc': upc
 	        }
@@ -31922,9 +31922,33 @@
 	          self.nonVeganIngredients = self.nonVeganIngredients.length > 0 ? self.nonVeganIngredients : ['No ingredients found that are non-vegan'];
 	          self.maybeIngredients = self.maybeIngredients.length > 0 ? self.maybeIngredients : ['No ingredients found that might be non-vegan'];
 	        }, function(err) {
-	          console.log(`Got error1: ${err.message}`);
+	          console.log(`Got error 1: ${err.message}`);
 	        });
 	    }.bind(this);
+
+	    this.searchText = function(raw) {
+	      var text = raw.split(' ').join('+').toLowerCase();
+	      var self = this;
+	      $http({
+	        method: 'GET',
+	        url: '/text',
+	        headers: {
+	          'text': text
+	        }
+	      })
+	        .then(function(res) {
+	          console.log('wat response', res);
+	          //response should be a list of possible matches. The user will choose a match and then we call searchUpc on the match.
+
+
+	        }, function(err) {
+	          console.log(`Got error 2: ${err.message}`);
+	        });
+	    }.bind(this);
+
+
+
+
 
 	    this.getList = function(callback) {
 	      var self = this;
