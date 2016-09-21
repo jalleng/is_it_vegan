@@ -31867,6 +31867,7 @@
 	    this.nonVeganList = {};
 	    this.nonVeganIngredients = [];
 	    this.maybeIngredients = [];
+	    this.products = [];
 
 	    // Move this function to server so it has access to apikey
 	    // this.getToken = function() {
@@ -31937,7 +31938,7 @@
 	        }
 	      })
 	        .then(function(res) {
-	          console.log('wat response', res);
+	          self.products = res.data.productsArray;
 	          //response should be a list of possible matches. The user will choose a match and then we call searchUpc on the match.
 
 
